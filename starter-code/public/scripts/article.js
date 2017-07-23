@@ -3,6 +3,7 @@ var app = app || {};
 
 // REVIEW: Check out all of the functions that we've cleaned up with arrow function syntax.
 
+
 // SCOTT WILL COVER TOMORROW: Wrap the contents of this file, except for the preceding 'use strict' and 'var app...' declararions, in an IIFE.
 // Give the IIFE a parameter called 'module'.
 // At the very end of the code, but still inside the IIFE, attach the 'Article' object to 'module'.
@@ -42,6 +43,10 @@ Article.loadAll = rows => {
   // of functions. So if we set a variable equal to the result of a .map, it will be our transformed array.
   // There is no need to push to anything.
 
+var refactorForEach = rawData.map(ele => { new Article(ele)
+  console.log("refactorForEach", refactorForEach);
+  return refactorForEach}
+);
   /* OLD forEach():
   rawData.forEach(function(ele) {
   Article.all.push(new Article(ele));
@@ -51,7 +56,7 @@ Article.loadAll = rows => {
 };
 
 Article.fetchAll = callback => {
-  $.get('/articles')
+  $.get('articles')
   .then(
     results => {
       Article.loadAll(results);
@@ -86,7 +91,7 @@ Article.numWordsByAuthor = () => {
 
 Article.truncateTable = callback => {
   $.ajax({
-    url: '/articles',
+    url: 'articles',
     method: 'DELETE',
   })
   .then(console.log) // REVIEW: Check out this clean syntax for just passing 'assumed' data into a named function!
@@ -97,14 +102,14 @@ Article.truncateTable = callback => {
 
 Article.prototype.insertRecord = function(callback) {
   // REVIEW: Why can't we use an arrow function here for .insertRecord()??
-  $.post('/articles', {author: this.author, authorUrl: this.authorUrl, body: this.body, category: this.category, publishedOn: this.publishedOn, title: this.title})
+  $.post('articles', {author: this.author, authorUrl: this.authorUrl, body: this.body, category: this.category, publishedOn: this.publishedOn, title: this.title})
   .then(console.log)
   .then(callback);
 };
 
 Article.prototype.deleteRecord = function(callback) {
   $.ajax({
-    url: `/articles/${this.article_id}`,
+    url: `articles/${this.article_id}`,
     method: 'DELETE'
   })
   .then(console.log)
@@ -113,7 +118,7 @@ Article.prototype.deleteRecord = function(callback) {
 
 Article.prototype.updateRecord = function(callback) {
   $.ajax({
-    url: `/articles/${this.article_id}`,
+    url: `articles/${this.article_id}`,
     method: 'PUT',
     data: {
       author: this.author,
