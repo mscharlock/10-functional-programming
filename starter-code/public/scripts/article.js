@@ -3,6 +3,7 @@ var app = app || {};
 
 // REVIEW: Check out all of the functions that we've cleaned up with arrow function syntax.
 
+
 // SCOTT WILL COVER TOMORROW: Wrap the contents of this file, except for the preceding 'use strict' and 'var app...' declararions, in an IIFE.
 // Give the IIFE a parameter called 'module'.
 // At the very end of the code, but still inside the IIFE, attach the 'Article' object to 'module'.
@@ -37,11 +38,15 @@ Article.prototype.toHtml = function() {
 Article.loadAll = rows => {
   rows.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)));
 
-  // TODO: Refactor this forEach code, by using a `.map` call instead, since what we are trying to accomplish
+  // DONE?: Refactor this forEach code, by using a `.map` call instead, since what we are trying to accomplish
   // is the transformation of one collection into another. Remember that we can set variables equal to the result
   // of functions. So if we set a variable equal to the result of a .map, it will be our transformed array.
   // There is no need to push to anything.
 
+var refactorForEach = rawData.map(ele => { new Article()
+  console.log("refactorForEach", refactorForEach);
+}
+);
   /* OLD forEach():
   rawData.forEach(function(ele) {
   Article.all.push(new Article(ele));
@@ -51,7 +56,7 @@ Article.loadAll = rows => {
 };
 
 Article.fetchAll = callback => {
-  $.get('/articles')
+  $.get('articles')
   .then(
     results => {
       Article.loadAll(results);
@@ -60,16 +65,17 @@ Article.fetchAll = callback => {
   )
 };
 
-// TODO: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
+// DONE?: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
 Article.numWordsAll = () => {
-  return Article.all.map().reduce()
+  return Article.all.map(Article.all.split(' ').length).reduce((acc, current))
 };
 
 // TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names. You will
 // probably need to use the optional accumulator argument in your reduce call.
 Article.allAuthors = () => {
-  return Article.all.map().reduce();
-};
+  return Article.all.map(ele => {return ele.author}).reduce((acc, val) => {if (!acc.includes(val))
+     {acc.push(val)} []
+}
 
 Article.numWordsByAuthor = () => {
   return Article.allAuthors().map(author => {
@@ -86,7 +92,7 @@ Article.numWordsByAuthor = () => {
 
 Article.truncateTable = callback => {
   $.ajax({
-    url: '/articles',
+    url: 'articles',
     method: 'DELETE',
   })
   .then(console.log) // REVIEW: Check out this clean syntax for just passing 'assumed' data into a named function!
@@ -97,14 +103,14 @@ Article.truncateTable = callback => {
 
 Article.prototype.insertRecord = function(callback) {
   // REVIEW: Why can't we use an arrow function here for .insertRecord()??
-  $.post('/articles', {author: this.author, authorUrl: this.authorUrl, body: this.body, category: this.category, publishedOn: this.publishedOn, title: this.title})
+  $.post('articles', {author: this.author, authorUrl: this.authorUrl, body: this.body, category: this.category, publishedOn: this.publishedOn, title: this.title})
   .then(console.log)
   .then(callback);
 };
 
 Article.prototype.deleteRecord = function(callback) {
   $.ajax({
-    url: `/articles/${this.article_id}`,
+    url: `articles/${this.article_id}`,
     method: 'DELETE'
   })
   .then(console.log)
@@ -113,7 +119,7 @@ Article.prototype.deleteRecord = function(callback) {
 
 Article.prototype.updateRecord = function(callback) {
   $.ajax({
-    url: `/articles/${this.article_id}`,
+    url: `articles/${this.article_id}`,
     method: 'PUT',
     data: {
       author: this.author,
