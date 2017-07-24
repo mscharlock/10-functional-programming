@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="styles/modules.css">
     <link rel="icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/18607604?v=3&s=200">
     <!-- AlmostDone: Setup a template for each row of the Author Stats section of this page: -->
-<script id ="template" type="text/x-Handlebars-template">
+<script id ="admin-template" type="text/x-Handlebars-template">
   <h2>{{author}}</h2>
   <h2>{{title}}</h2>
-  <h2>{{}}</h2>
+  <h2>{{wordCount}}</h2>
 
 </script>
   </head>
@@ -51,14 +51,14 @@
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="vendor/scripts/handlebars.js"></script>
-    <script src="scripts/article.js"></script>
-    <script src="scripts/articleView.js"></script>
-    <!-- TODO: Due to changes in article.js and articleView.js to attach their interior objects to a global 'app' object, we need to make changes to the contents of the following <script> tag: -->
+    <script src="/vendor/scripts/handlebars.js"></script>
+    <script src="/scripts/article.js"></script>
+    <script src="/scripts/articleView.js"></script>
+    <!-- DONE: Due to changes in article.js and articleView.js to attach their interior objects to a global 'app' object, we need to make changes to the contents of the following <script> tag: -->
     <script>
-      // TODO: After we fetch and load all the articles, what view function do we want to run next?
+      // DONE: After we fetch and load all the articles, what view function do we want to run next?
       // Let's pass in a callback function, to determine what happens AFTER all articles are loaded.
-      Article.fetchAll();
+    app.Article.fetchAll(app.articleView.initAdminPage);
     </script>
   </body>
 </html>
